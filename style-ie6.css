@@ -1,0 +1,12 @@
+/*
+--------------------------------------------------
+Site Base Styles IE fix
+Author:   Argon
+-------------------------------------------------- */
+.clearfix {zoom:1;}
+/*
+#layer {width: expression((document.body.clientWidth||document.documentElement.clientWidth)  > 990 ? '100%' : '990px');}
+*/
+/*
+#layer {width:expression((document.documentElement.clientWidth || document.body.clientWidt) < 990? '990px' : (document.documentElement.clientWidth || document.body.clientWidt)>1280? '1280px' : '100%');}
+*/

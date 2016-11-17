@@ -1,0 +1,75 @@
+.jScrollPaneContainer {
+	position:relative;
+	overflow:hidden;
+	z-index:1;
+}
+.jScrollPaneTrack {
+	position:absolute;
+	cursor:pointer;
+	left:0;
+	bottom:0;
+	width:100%;
+	background:url(images/bread-b.png) 0 9px repeat-x;
+	height:26px;
+}
+.jScrollIntervalTrack { 
+	position: absolute;
+}
+.jScrollPaneDrag {
+	position: absolute;
+	background: #666;
+	cursor: pointer;
+	overflow: hidden;
+	background: url(images/begunok.png) 50% 0 repeat;
+}
+.jScrollPaneDragLeft {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	overflow: hidden;
+	width: 4px;
+	background: url(images/begunok-l.png) 0 0 repeat;
+}
+.jScrollPaneDragRight {
+	position: absolute;
+	top: 0px;
+	right: 0px !important;
+	right: -1px;
+	overflow: hidden;
+	width: 4px;
+	background: url(images/begunok-r.png) 0 0 repeat;
+}
+a.jScrollArrowLeft {
+	cursor:pointer;
+	display: block;
+	position: absolute;
+	z-index: 1;
+	bottom: 0px;
+	left: 0px;
+	text-indent: -2000px !important;
+	overflow: hidden;
+	height: 21px;
+	width: 21px;
+}
+a.jScrollArrowRight {
+	cursor:pointer;
+	display: block;
+	position: absolute;
+	z-index: 1;
+	bottom: 0px;
+	right: 0px;
+	text-indent: -2000px !important;
+	overflow: hidden;
+	height: 21px;
+	width: 21px;
+}
+.scroll-pane {
+	float: left;
+	padding: 0px;
+}
+a.jScrollArrowLeft {
+	background: url('/_common/img/scroll/scroll-arrow-left.png') no-repeat 0px 0px;
+}
+a.jScrollArrowRight {
+	background: url('/_common/img/scroll/scroll-arrow-right.png') no-repeat 0px 0px;
+}

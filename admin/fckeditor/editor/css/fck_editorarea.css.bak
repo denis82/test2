@@ -1,0 +1,51 @@
+p {
+  font-size: 14px;
+  font-family: Arial;
+  text-align: justify;
+  color: #333333;
+}
+
+a {
+  color: #3bb3c2;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.line {
+  border-top: 1px solid #49456a;
+  border-left: 1px solid #49456a;
+}
+.line td {
+  border-right: 1px solid #49456a;
+  border-bottom: 1px solid #49456a;
+  padding: 5px 5px 5px 5px;
+}
+.line .header {
+  border-right: 1px solid #49456a;
+  border-bottom: 1px solid #49456a;
+  padding: 15px 5px 15px 5px;
+  color: #0050ab;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  background: #e5fffe;
+  text-transform: uppercase;
+}
+
+.noline {
+  border: none;
+}
+.noline td {
+  border: none;
+  padding: 5px 5px 5px 5px;
+}
+.noline .header {
+  border: none;
+  padding: 15px 5px 15px 5px;
+  color: #0050ab;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  background: #e5fffe;
+  text-transform: uppercase;
+}
