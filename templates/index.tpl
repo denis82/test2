@@ -29,6 +29,7 @@
 	<script type="text/javascript">
 			Cufon.replace('.rur',{fontFamily: "ALS Rubl"});
 	</script>
+	<script type="text/javascript" src="//vk.com/js/api/openapi.js?115"></script>
    <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -46,9 +47,9 @@
 <body>
 <div id="layer">
 
-	<div id="rose-block-city" class="clearfix">
+	<!--<div id="rose-block-city" class="clearfix">
 	<span>Ваш город:</span> <span class="city-active">Ижевск</span>
-	</div>
+	</div>-->
 	<div id="minheight">
 	
 
@@ -81,17 +82,11 @@
 	<!--/header-->
 	
 	<!--search-->
-	<div id="search">
-		<form  action="/search" name="SearchForm" method="post"> 
-			<div><input id="ajaxSearch_input" name="p_query" type="text" /></div>
-			<span class="link" onclick="document.SearchForm.submit()">Найти</span> 
-		</form> 
-	</div>
-	<!--/search-->
-	
-	<!--rose-block-->
-	<div id="rose-block" class="clearfix">
-	{@BANNER@}
+    <!--/search-->
+    
+    <!--rose-block-->
+    <div id="rose-block" class="rose-block--main clearfix">
+    	{@BANNER@}
 		{@MAINTEXT@}	
 	</div>
 	

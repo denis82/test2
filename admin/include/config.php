@@ -2,7 +2,7 @@
 
   $common_options["site_url"]="/";
   $common_options["site_name"]="Лучший подарок";
-  $common_options["document_root"]="/home/u96389/mybestpodarok.ru/www/";
+  $common_options["document_root"]="/var/www/picomsu/data/www/mybestpodarok.picom.su/";
   $common_options["files_folder"]="files/";
   $common_options["upload_folder"]=$common_options["document_root"].$common_options["files_folder"];
   $common_options["func_folder"]=$common_options["document_root"]."functional/";
@@ -12,10 +12,10 @@
   $common_options["org"] = "компании «Лучший подарок»";
   $common_options["from_email"] = "site@mybestpodarok.ru";
 
-  $common_options["db_server"]="u96389.mysql.masterhost.ru";
-  $common_options["db_name"]="u96389_mybestpod";
-  $common_options["db_user"]="u96389_mybestpo";
-  $common_options["db_pass"]="pratY6-bbI";
+  $common_options["db_server"]="localhost";
+  $common_options["db_name"]="picomsu_mybestpodarok";
+  $common_options["db_user"]="picomsu";
+  $common_options["db_pass"]="NyAIh9kH";
 
   
   $common_options["content_te_id"] = 1;

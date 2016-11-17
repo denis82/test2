@@ -88,6 +88,7 @@
   	global $common_options;
   	$p_file_id = (int)$p_file_id;
   	$file = mysql_fetch_array(mysql_query("select * from files where id = $p_file_id"));
+  		//var_dump($file);echo "=>"; var_dump($h);echo "<br>";
   	$return = array();
   	$return = $file;
   	$return["size"] = @filesize($common_options["upload_folder"].$file["name"]);
@@ -123,7 +124,7 @@
     		$return = translate($return);
     		break;
     	case "web":
-    		$return = htmlspecialchars(trim($return));
+    		$return = htmlspecialchars(trim($return),null, "windows-1251");
     		break;
     }
 
@@ -195,6 +196,7 @@
   function get_value_har($e_id, $pe_code){
   	$res = mysql_query("select * from har_elements where e_id = '$e_id' and pe_code = '$pe_code'");
   	$h = mysql_fetch_array($res);
+  
   	return $h["value"];
   }
   

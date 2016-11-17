@@ -91,6 +91,9 @@ $(document).ready(function() {
   $('.fancy_order_form.fb').click(function() {
     ga('send', 'event', 'buttons', 'order', 'openform');
   });
+  
+  
+  
 });
 
 function initScrollPane(scrollPanes) {
@@ -159,4 +162,9 @@ function initScrollPane2(scrollPanes) {
     }
   });
 
+}
+
+function responseCaptcha() {
+	$('#response').css("display", "");
+	$('#responseErrors').css("display", "none");
 }

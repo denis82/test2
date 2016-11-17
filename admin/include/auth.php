@@ -5,7 +5,7 @@
   	unset($_SESSION["admin_password"]);
   }
 
-  if(($_SESSION["admin_login"]!=$admin_options["admin_login"])||($_SESSION["admin_password"]!=$admin_options["admin_password"])){
+  /*if(($_SESSION["admin_login"]!=$admin_options["admin_login"])||($_SESSION["admin_password"]!=$admin_options["admin_password"])){
   	if(($_POST["p_login"]!=$admin_options["admin_login"])||($_POST["p_password"]!=$admin_options["admin_password"])){
   		$output .= "
 				<html><head><title>¬ход</title>
@@ -33,5 +33,5 @@
 			$_SESSION["admin_password"]=$admin_options["admin_password"];
   	}
   }
-
+*/
 ?>

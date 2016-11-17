@@ -943,7 +943,7 @@ VK.Widgets.Comments(\"vk_comments\", {limit: 5, width: \"665\", attach: \"photo\
       $parameter_page["main_text"] .= "
     		<div class=\"search\">
     			<form  action=\"/search\" name=\"SearchForm\" method=\"post\"> 
-    				<input id=\"ajaxSearch_input\" name=\"p_query\" type=\"text\" /><span class=\"link\" onclick=\"document.SearchForm.submit()\">Найти</span>
+    				
     			</form>
     		</div>
     		

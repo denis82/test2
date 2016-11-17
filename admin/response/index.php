@@ -54,7 +54,21 @@
           if($row["e_id"]){
             $g = get_element($row["e_id"]);
           }
-          echo "<tr><td><a href=\"index.php?p_cmd=edit&p_id=$row[id]\">".nvl($g["name"], "Без подарка")."</a></td><td><a href=\"index.php?p_cmd=delete&p_id=$row[id]\">удалить</a></td></tr>";
+          
+          $style = '';
+		if ($row['active'] == 0) {
+			$style = 'style="color:red"';
+			$activeLink = 'Опубликовать';
+		} else {
+			$activeLink = 'Скрыть';
+		}
+		
+          echo "<tr>
+					<td><a href=\"index.php?p_cmd=edit&p_id=$row[id]\">".nvl($g["name"], "Без подарка")."</a></td>
+					<td ".$style.">".$row[3]."</td>
+					<td><a href=\"index.php?p_cmd=activeResp$row[active]&p_id=$row[id]\">$activeLink</a></td>
+					<td><a href=\"index.php?p_cmd=delete&p_id=$row[id]\">удалить</a></td>
+				</tr>";
         
         }
       }else{
@@ -64,7 +78,24 @@
     }elseif($p_cmd=="edit"){
       echo "<div class='top-path'>Редактирование отзыва</div>";
       edit("update", $p_id);
-
+	
+	}elseif($p_cmd=="activeResp0"){
+      mysql_query("update response
+                       set
+                         active = 1
+                       where id=\"$p_id\"
+                   ");
+       $p_cmd="";
+      $count_cmd=2;
+	}elseif($p_cmd=="activeResp1"){
+      mysql_query("update response
+                       set
+                         active = 0
+                       where id=\"$p_id\"
+                   ");
+       $p_cmd="";
+      $count_cmd=2;
+	
 
     }elseif($p_cmd=="update"){
       if($p_text){
@@ -93,7 +124,7 @@
 
       echo mysql_error();
 
-    }
+    }//echo "<pre>"; print_r($p_cmd);echo "</pre>";
   }
 
   require "../include/bottom.php";

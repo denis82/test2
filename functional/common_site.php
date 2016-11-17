@@ -1015,7 +1015,7 @@ document.write(VK.Share.button(false,{type: \"round_nocount\", text: \"Поделитьс
   	
   	
   	$empty = "";
-  	
+
 		$page = str_replace("{@TITLE@}", $parameter_page["title"], $page);
 		$page = str_replace("{@NAME@}", $parameter_page["name"], $page);
 		$page = str_replace("{@KEYWORDS@}", $parameter_page["keywords"], $page);

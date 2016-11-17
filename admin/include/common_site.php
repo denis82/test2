@@ -470,18 +470,21 @@ function show_list_photos($query, $type = "alb"){
     	
   	}
   	
-  	if($parameter_page["id"] == $common_options["index"]){
+  	//if($parameter_page["id"] == $common_options["index"]){
     	//      
     	$pics = array();
-    	$res = mysql_query("select * from elements where e_id = $parameter_page[id] and te_id=106");
+    	$res = mysql_query("select * from elements where e_id = 2 and te_id=106");
     	while ($row = mysql_fetch_array($res)) {
     		$pics[]=$row;
     	}
+    	
     	if(count($pics)){
       	$pic = $pics[rand(0, count($pics)-1)];
       	$photo = get_value_har($pic["id"], "photo");
+      	
       	$photo_info = get_file_info($photo);
-      	//print_r($photo_info);
+      	//print_r(get_value_har($pic["id"], "style"));die();
+      	
       	
       	$parameter_page["head"] = "
         	<div class=\"podarok\" id=\"".get_value_har($pic["id"], "style")."\" style=\"background:url(".$photo_info["link"].") 0 0 no-repeat;\">
@@ -527,14 +530,27 @@ function show_list_photos($query, $type = "alb"){
     	  $list = "<div class=\"quadro\"><ul class=\"q-block\">$list</ul></div>";
     	}
     	$parameter_page["index_links"] = $list;
+//     	$parameter_page["head"] = "
+//       	<div class=\"podarok\" id=\"".get_value_har($pic["id"], "style")."\" style=\"background:url(".$photo_info["link"].") 0 0 no-repeat;\">
+//       		<div id=\"tel\"></div>
+//       		<div ><a title=\"Лучший подарок\">Лучший подарок</a></div>
+//       	</div>
+//     	";
+
+		$list_header = [];
+      	$res = mysql_query("select value from options where code = 'slogan' or code = 'phone'");
+      	while ($row = mysql_fetch_array($res)) {
+    		$list_header[]=$row;
+    	}
     	$parameter_page["head"] = "
       	<div class=\"podarok\" id=\"".get_value_har($pic["id"], "style")."\" style=\"background:url(".$photo_info["link"].") 0 0 no-repeat;\">
-      		<div id=\"tel\"></div>
-      		<div ><a title=\"Лучший подарок\">Лучший подарок</a></div>
+          <div id=\"base-logo\"><a href=\"/\"></a></div>
+      		<div id=\"base-info\"><p>".$list_header[1]['value']."</p>
+            <div id=\"base-tel\">".$list_header[0]['value']."</div>
+          </div>
       	</div>
     	";
-    	
-    	
+
     	$banner_link = get_value_har($parameter_page["id"], "banner_link");
     	$banner_text = "";
 			$query = "select e.* from elements e, har_elements he where e.id=he.e_id and e.te_id = '602' and he.value='1' and he.pe_code='show-titul'  order by rand()";
@@ -559,8 +575,14 @@ function show_list_photos($query, $type = "alb"){
     	}else{
     	  $parameter_page["banner"] = "";
     	}
+    if($parameter_page["id"] == $common_options["index"]){	
   	  $parameter_page["banner"] = "<div class=\"ban1\">    	
-    	
+      <div id=\"search\">
+        <form action=\"/search\" name=\"SearchForm\" method=\"post\"> 
+          <div><input id=\"ajaxSearch_input\" name=\"p_query\" type=\"text\" /></div>
+           
+        </form> 
+      </div>
       <!-- VK Widget -->
       <div id=\"vk_groups\"></div>
       <script type=\"text/javascript\">
@@ -568,16 +590,22 @@ function show_list_photos($query, $type = "alb"){
       </script>
       </div>";	  	   	
   	  
-  	}else{
+  	} //<span class=\"link\" onclick=\"document.SearchForm.submit()\">Найти</span>
+  	else{
   	  $parameter_page["banner"] = "
-        
+        <div id=\"search\">
+          <form action=\"/search\" name=\"SearchForm\" method=\"post\"> 
+            <div><input id=\"ajaxSearch_input\" name=\"p_query\" type=\"text\" /></div>
+           
+          </form> 
+        </div>
         <!-- VK Widget -->
         <div id=\"vk_groups\"></div>
         <script type=\"text/javascript\">
         VK.Widgets.Group(\"vk_groups\", {mode: 0, width: \"160\", height: \"400\", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 56838347);
         </script>  	  
         ";
-  	}
+  	} //  <span class=\"link\" onclick=\"document.SearchForm.submit()\">Найти</span> 
   	
   	
   	if($parameter_page["id"] == $common_options["map_page"]){
@@ -732,6 +760,7 @@ function show_list_photos($query, $type = "alb"){
 
   	
   	if(($parameter_page["te_id"] == 202)||($c&&$g&&($parameter_page["te_id"] == 211))||($p&&$g&&($parameter_page["te_id"] == 210))){
+  	
     	//                  
     	if($parameter_page["te_id"] == 211){
     	  $coll = get_element($c);
@@ -750,7 +779,15 @@ function show_list_photos($query, $type = "alb"){
         $price = (int)get_value_har($parameter_page["id"], "price");
     	if($photo){
       	$photo_info = get_file_info($photo);
-      	$img .= "<div class=\"full-img\"><div style=\"width:$photo_info[width]px; height:$photo_info[height]px;\" class=\"cat-pic\"><img src=\"$photo_info[link]\" alt=\"\"  /><i class=\"tl\"></i><i class=\"tr\"></i><i class=\"bl\"></i><i class=\"br\"></i></div>";
+      	$img .= "<div class=\"full-img\">
+					<div style=\"width:$photo_info[width]px; height:$photo_info[height]px;\" class=\"cat-pic\">
+						<img src=\"$photo_info[link]\" alt=\"\"  />
+						<i class=\"tl\"></i>
+						<i class=\"tr\"></i>
+						<i class=\"bl\"></i>
+						<i class=\"br\"></i>
+					</div>
+				</div>";
       	
       	$dop_uslugi = get_value_option("dop_uslugi");
       	if($dop_uslugi){
@@ -832,11 +869,13 @@ function show_list_photos($query, $type = "alb"){
 		  
 			session_start();		  
 		  $cmd = get_var_web("p_cmd");
+		  
 		  if($cmd=="send_comment"){
 		    $name = nvl(htmlspecialchars(stripslashes(trim(get_var_web("p_name")))), "Аноним");
 		    $message = htmlspecialchars(stripslashes(trim(get_var_web("p_message"))));
 		    if($name&&$message){
 		    	if(isset($_SESSION['captcha_keystring']) && $_SESSION['captcha_keystring'] ==  $_POST['p_kode']){
+		    	
 			      mysql_query("insert into response (date, name, text, e_id) values (now(), \"$name\", \"$message\", $parameter_page[id])");
 		    	}else{
 		    		$error = "<p>Неверно введен текст с картинки</p>";
@@ -845,7 +884,7 @@ function show_list_photos($query, $type = "alb"){
 		  }
 
 		  $comments = "";
-  		$query = "select r.*, date_format(r.date, '%d') day, date_format(r.date, '%m') month, date_format(r.date, '%Y') year from response r where  e_id = '$parameter_page[id]' order by date desc ";
+  		$query = "select r.*, date_format(r.date, '%d') day, date_format(r.date, '%m') month, date_format(r.date, '%Y') year from response r where  active=".true." e_id = '$parameter_page[id]' order by date desc ";
   		$res = mysql_query($query);
   		$i=0;
     	while(($item = mysql_fetch_array($res))){
@@ -919,34 +958,41 @@ function show_list_photos($query, $type = "alb"){
             
             
 			$parameter_page["main_text"] .= "
-				<div class=\"comments\">
-                        <a name=\"reviews\" id=\"reviews\"></a>
-						<h2>Отзывы:</h2><br />
-				$comments
-					<p class=\"make-comment\"><a href=\"#\" onClick=\"JavaScript:document.getElementById('response').style.display=''; return false;\">Добавить отзыв</a></p>
-					<div id=\"response\" style='display:none;'>
-					<table>
-	        <form method=\"post\">
-	            <input type=\"hidden\" name=\"p_cmd\" value=\"send_comment\" />
-	            <tr>
-	                <td align=right>От кого</td>
-	                <td ><input class=\"input-short\" name=\"p_name\" size=\"40\" value=\"".htmlspecialchars(stripslashes($p_name))."\"/></td>
-	            </tr>
-	            <tr>
-	                <td  align=right valign=top>Сам отзыв*</td>
-	                <td ><textarea class=\"input\" name=\"p_message\" cols=\"35\" rows=\"7\">".htmlspecialchars(stripslashes($p_message))."</textarea></td>
-	            </tr>
-	            <tr>
-	                <td  align=right valign=top>Введите код*</td>
-	                <td ><img src=\"/cap.php\" width=160 height=80> <input type=\"text\" name=\"p_kode\" class=\"input\" style=\"width:80px\"></td>
-	            </tr>
-	            <tr>
-	                <td></td><td  ><input class=\"button\" type=\"submit\" value=\"Отправить\" /></td>
-	            </tr>
-	        </form>
-	        </table>
-	        </div>
-				</div>";
+        <div class=\"comments\">
+        $comments
+          <p class=\"make-comment\"><a href=\"#\" onClick=\"JavaScript:document.getElementById('response').style.display=''; return false;\">              </a></p>
+          <a name=\"response-form\"></a>
+          <div id=\"response\" style='display:none;'>
+          <table>
+
+          <form method=\"post\">
+              <input type=\"hidden\" name=\"p_cmd\" value=\"send_comment\" />
+                <tr>
+                    <td align=right class=\"title\">От кого</td>
+              </tr>
+                <tr>
+                    <td ><input class=\"input-short\" name=\"p_name\" size=\"40\" value=\"".htmlspecialchars(stripslashes($p_name))."\"/></td>
+                </tr>
+                <tr>
+                    <td  align=right valign=top class=\"title\">Сам отзыв*</td>
+                </tr>
+              <tr>
+                  <td ><textarea class=\"input\" name=\"p_message\" cols=\"35\" rows=\"7\">".htmlspecialchars(stripslashes($p_message))."</textarea></td>
+                </tr>
+                <tr>
+                    <td  align=right valign=top class=\"title\">Введите код*</td>
+                </tr>
+                <tr class=\"capture\"> 
+                    <td><img src=\"/cap.php\" width=160 height=80>
+                    <input type=\"text\" name=\"p_kode\" class=\"input\"></td>
+              </tr>
+              <tr>
+                  <td  ><input class=\"button\" type=\"submit\" value=\"Отправить\" /></td>
+              </tr>
+          </form>
+          </table>
+          </div>
+        </div>";  
 			
             $parameter_page["main_text"] .= "<div id=\"vk_comments\"></div>
 <script type=\"text/javascript\">
@@ -987,12 +1033,12 @@ VK.Widgets.Comments(\"vk_comments\", {limit: 5, width: \"665\", attach: \"photo\
       $parameter_page["main_text"] .= "
     		<div class=\"search\">
     			<form  action=\"/search\" name=\"SearchForm\" method=\"post\"> 
-    				<input id=\"ajaxSearch_input\" name=\"p_query\" type=\"text\" /><span class=\"link\" onclick=\"document.SearchForm.submit()\">Найти</span>
+    				
     			</form>
     		</div>
     		
     		
-      ";
+      ";  //<input id=\"ajaxSearch_input\" name=\"p_query\" type=\"text\" /><span class=\"link\" onclick=\"document.SearchForm.submit()\">Найти</span>
       if($query){
         $parameter_page["main_text"] .= search($query);
       }
@@ -1001,16 +1047,21 @@ VK.Widgets.Comments(\"vk_comments\", {limit: 5, width: \"665\", attach: \"photo\
   	
   	if($parameter_page["id"] == $common_options["response_page"]){
   	  //      
-			session_start();		  
+  	  
+			session_start();	
+			
 		  $cmd = get_var_web("p_cmd");
 		  if($cmd=="send_comment"){
 		    $name = nvl(htmlspecialchars(stripslashes(trim(get_var_web("p_name")))), "Аноним");
 		    $message = htmlspecialchars(stripslashes(trim(get_var_web("p_message"))));
 		    if($name&&$message){
 		    	if(isset($_SESSION['captcha_keystring']) && $_SESSION['captcha_keystring'] ==  $_POST['p_kode']){
-			      mysql_query("insert into response (date, name, text) values (now(), \"$name\", \"$message\")");
+		    	
+			      $response_success = mysql_query("insert into response (date, name, text) values (now(), \"$name\", \"$message\")"); 
+						//var_dump($response_success); die();
 				      $param = array();
 		    	}else{
+					//var_dump('Капча не прошла'); die();
 		    		$error = "<p>Неверно введен текст с картинки</p>";
 		    	}
 		      
@@ -1019,7 +1070,7 @@ VK.Widgets.Comments(\"vk_comments\", {limit: 5, width: \"665\", attach: \"photo\
 		  }
 
 		  $comments = "";
-  		$query = "select r.*, date_format(r.date, '%d') day, date_format(r.date, '%m') month, date_format(r.date, '%Y') year from response r order by date desc ";
+  		$query = "select r.*, date_format(r.date, '%d') day, date_format(r.date, '%m') month, date_format(r.date, '%Y') year from response r where  active=".true." order by date desc ";
   		$res = mysql_query($query);
   		$i=0;
     	while(($item = mysql_fetch_array($res))){
@@ -1042,37 +1093,61 @@ VK.Widgets.Comments(\"vk_comments\", {limit: 5, width: \"665\", attach: \"photo\
     	}
     	
     	if($i>4){
-    	  $comments = "<p class=\"make-comment-top\"><a href=\"#response-form\" onClick=\"JavaScript:document.getElementById('response').style.display=''; \">Добавить отзыв</a></p>".$comments;
+    	  $comments = "<p class=\"make-comment-top\"><a href=\"#response-form\" onClick=\"responseCaptcha(); \">Добавить отзыв</a></p>".$comments;
     	}
+    	$response_massage = '';
+		if(isset($_POST['review_captcha']) and $_POST['review_captcha'] != null) {
+			if(true === $response_success ) {
+				$response_massage = '<span class="success_massage">Ваш отзыв принят и будет опубликован модератором!</span>';
+			} elseif (false === $response_success) {
+					$response_massage = '<span class="error_massage">Произошла ошибка при добавленни отзыва повторите попытку позже!</span>';
+			} else {
+				$response_massage  = '<span class="error_massage">'.$error.'</span>';
+			}
+			$display = "'style='display;'";
+		} else {
+			$display = "style='display:none'";
+		}
 		  
-			$parameter_page["main_text"] .= "
-				<div class=\"comments\">
-				$comments
-					<p class=\"make-comment\"><a href=\"#\" onClick=\"JavaScript:document.getElementById('response').style.display=''; return false;\">              </a></p>
-					<a name=\"response-form\"></a>
-					<div id=\"response\" style='display:none;'>
-					<table>
-	        <form method=\"post\">
-	            <input type=\"hidden\" name=\"p_cmd\" value=\"send_comment\" />
-	            <tr>
-	                <td align=right>От кого</td>
-	                <td ><input class=\"input-short\" name=\"p_name\" size=\"40\" value=\"".htmlspecialchars(stripslashes($p_name))."\"/></td>
-	            </tr>
-	            <tr>
-	                <td  align=right valign=top>Сам отзыв*</td>
-	                <td ><textarea class=\"input\" name=\"p_message\" cols=\"35\" rows=\"7\">".htmlspecialchars(stripslashes($p_message))."</textarea></td>
-	            </tr>
-	            <tr>
-	                <td  align=right valign=top>Введите код*</td>
-	                <td ><img src=\"/cap.php\" width=160 height=80> <input type=\"text\" name=\"p_kode\" class=\"input\" style=\"width:80px\"></td>
-	            </tr>
-	            <tr>
-	                <td></td><td  ><input class=\"button\" type=\"submit\" value=\"Отправить\" /></td>
-	            </tr>
-	        </form>
-	        </table>
-	        </div>
-				</div>";  	  
+			     $parameter_page["main_text"] .= "
+        <div class=\"comments\">
+        $comments
+          <p class=\"make-comment\"><a href=\"#\" onClick=\"JavaScript:document.getElementById('response').style.display=''; return false;\">              </a></p>
+          <a name=\"response-form\"></a>
+          <div id=\"responseErrors\" $display >$response_massage
+          </div>
+          <div id=\"response\" style='display:none'>
+          <table>
+
+          <form method=\"post\">
+              <input type=\"hidden\" name=\"p_cmd\" value=\"send_comment\" />
+                <tr>
+                    <td align=right class=\"title\">От кого</td>
+              </tr>
+                <tr>
+                    <td ><input class=\"input-short\" name=\"p_name\" size=\"40\" value=\"".htmlspecialchars(stripslashes($p_name))."\"/></td>
+                </tr>
+                <tr>
+                    <td  align=right valign=top class=\"title\">Сам отзыв*</td>
+                </tr>
+              <tr>
+                  <td ><textarea class=\"input\" name=\"p_message\" cols=\"35\" rows=\"7\">".htmlspecialchars(stripslashes($p_message))."</textarea></td>
+                </tr>
+                <tr>
+                    <td  align=right valign=top class=\"title\">Введите код*</td>
+                </tr>
+                <tr class=\"capture\"> 
+                    <td><img src=\"/cap.php\" width=160 height=80>
+                    <input type=\"text\" name=\"p_kode\" class=\"input\"></td>
+              </tr>
+              <tr>
+                  <td  ><input class=\"button\" name=\"review_captcha\" type=\"submit\" value=\"Отправить\" /></td>
+              </tr>
+          </form>
+          </table>
+          </div>
+        </div>";  	
+        
   	}
 
   	$parameter_page["path"] = get_path_elements($main_element);
@@ -1182,7 +1257,6 @@ VK.Widgets.Comments(\"vk_comments\", {limit: 5, width: \"665\", attach: \"photo\
   	  include_once($_SERVER['DOCUMENT_ROOT']."/functional/basket.php");
   	}
   	
-  	
   	return $parameter_page;
   }
   
@@ -1207,7 +1281,7 @@ VK.Widgets.Comments(\"vk_comments\", {limit: 5, width: \"665\", attach: \"photo\
 		$page = str_replace("{@KEYWORDS@}", $parameter_page["keywords"], $page);
 		$page = str_replace("{@DESCRIPTION@}", $parameter_page["description"], $page);
 		$page = str_replace("{@TOPMENU@}", $parameter_page["topmenu"], $page);
-		$page = str_replace("{@HEAD@}", $parameter_page["head"], $page);
+		$page = str_replace("{@HEAD@}", $parameter_page["head"], $page);	
 		$page = str_replace("{@INDEXGOODS@}", $parameter_page["index_goods"], $page);
 		$page = str_replace("{@LINKS@}", $parameter_page["index_links"], $page);
 		$page = str_replace("{@FIRSTNEWS@}", $parameter_page["firstnews"], $page);
